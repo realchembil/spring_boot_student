@@ -2,6 +2,7 @@ package com.sapienscorp.sapiens.students;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table
@@ -22,6 +23,15 @@ public class Student {
     private String name;
     private LocalDate dob;
     private String email;
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", dob=" + dob +
+                ", email='" + email + '\'' +
+                '}';
+    }
 
     public Long getId() {
         return id;
@@ -56,30 +66,32 @@ public class Student {
     }
 
     public Integer getAge() {
-        return age;
+
+        return Period.between(this.dob,LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {
         this.age = age;
     }
 
+    @Transient
     private Integer age;
 
     public Student() {
     }
 
-    public Student(String name, LocalDate dob, String email, Integer age) {
+    public Student(String name, LocalDate dob, String email) {
         this.name = name;
         this.dob = dob;
         this.email = email;
-        this.age = age;
+
     }
 
-    public Student(Long id, String name, LocalDate dob, String email, Integer age) {
+    public Student(Long id, String name, LocalDate dob, String email) {
         this.id = id;
         this.name = name;
         this.dob = dob;
         this.email = email;
-        this.age = age;
+
     }
 }
